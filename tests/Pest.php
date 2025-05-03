@@ -1,6 +1,6 @@
 <?php
 
-use VivekMistry\RepositoryInterface\Tests\TestCase;
+use VivekMistry\FacadeMaker\Tests\TestCase;
 
 
 /*

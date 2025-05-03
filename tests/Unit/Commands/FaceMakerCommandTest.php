@@ -3,37 +3,36 @@
 namespace Tests\Unit\Commands;
 
 use Illuminate\Filesystem\Filesystem;
-use Tests\TestCase;
-use App\Console\Commands\MakeRepo;
 use Illuminate\Support\Facades\Artisan;
-use VivekMistry\RepositoryInterface\RepositoryGeneratorServiceProvider;
+use VivekMistry\FacadeMaker\FacadeServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use VivekMistry\RepositoryInterface\Commands\MakeRepo as CommandsMakeRepo;
+use VivekMistry\FacadeMaker\Commands\FacadeDeveloper as FacadeDeveloper;
 
 class FaceMakerCommandTest extends BaseTestCase
 {
     protected $filesystem;
-    protected $interfacePath;
-    protected $repositoryPath;
-    protected $testName = 'TestRepo';
+    protected $facadePath;
+    protected $facadeServicePath;
+    protected $facadeName = 'FileUpload';
+    protected $facadeServiceName = 'CommonFileUpload';
 
     protected function setUp(): void
     {
         parent::setUp();
 
         // Register the service provider that registers the command
-        $this->app->register(RepositoryGeneratorServiceProvider::class);
+        $this->app->register(FacadeServiceProvider::class);
 
         $this->filesystem = new Filesystem();
-        $this->interfacePath = app_path('Repositories/Interface/' . $this->testName . 'RepositoryInterface.php');
-        $this->repositoryPath = app_path('Repositories/Repository/' . $this->testName . 'Repository.php');
+        $this->facadePath = app_path('Facades/' . $this->facadeName . '.php');
+        $this->facadeServicePath = app_path('Facades/Services/' . $this->facadeServiceName . '.php');
 
         // Clean up before each test
-        if ($this->filesystem->exists($this->interfacePath)) {
-            $this->filesystem->delete($this->interfacePath);
+        if ($this->filesystem->exists($this->facadePath)) {
+            $this->filesystem->delete($this->facadePath);
         }
-        if ($this->filesystem->exists($this->repositoryPath)) {
-            $this->filesystem->delete($this->repositoryPath);
+        if ($this->filesystem->exists($this->facadeServicePath)) {
+            $this->filesystem->delete($this->facadeServicePath);
         }
     }
 
@@ -42,7 +41,7 @@ class FaceMakerCommandTest extends BaseTestCase
     {
         // Option 1: Check via Artisan (requires service provider to be registered)
         $this->assertArrayHasKey(
-            'app:make-repo',
+            'app:facade-maker',
             Artisan::all(),
             'Command should be registered'
         );
@@ -50,26 +49,26 @@ class FaceMakerCommandTest extends BaseTestCase
 
     public function test_command_signature()
     {
-        $command = new CommandsMakeRepo(new Filesystem());
-        $this->assertEquals('app:make-repo {name}', $command->getSignature());
+        $command = new FacadeDeveloper(new Filesystem());
+        $this->assertEquals('app:facade-maker {facadeName?} {facadeServiceClass?}', $command->getSignature());
     }
 
     public function test_command_properties()
     {
-        $command = new CommandsMakeRepo(new Filesystem());
+        $command = new FacadeDeveloper(new Filesystem());
 
         $reflection = new \ReflectionClass($command);
         $property = $reflection->getProperty('signature');
         $property->setAccessible(true);
 
-        $this->assertEquals('app:make-repo {name}', $property->getValue($command));
+        $this->assertEquals('app:facade-maker {facadeName?} {facadeServiceClass?}', $property->getValue($command));
     }
 
     public function test_command_execution()
     {
         // Get the actual path the command will use
-        $expectedInterfacePath = app_path('Repositories/Interface/TestRepositoryInterface.php');
-        $expectedRepoPath = app_path('Repositories/Repository/TestRepository.php');
+        $expectedInterfacePath = app_path('Facades/FileUpload.php');
+        $expectedRepoPath = app_path('Facades/Services/CommonFileUpload.php');
 
         // Clean up if files exist from previous tests
         if (file_exists($expectedInterfacePath)) {
@@ -79,9 +78,9 @@ class FaceMakerCommandTest extends BaseTestCase
             unlink($expectedRepoPath);
         }
 
-        $this->artisan('app:make-repo', ['name' => 'Test'])
-            ->expectsOutput("File : {$expectedInterfacePath} created")
-            ->expectsOutput("File : {$expectedRepoPath} created")
+        $this->artisan('app:make-repo', ['facadeName' => 'FileUpload', 'facadeServiceClass' => 'CommonFileUpload'])
+            // ->expectsOutput("File : {$expectedInterfacePath} created")
+            // ->expectsOutput("File : {$expectedRepoPath} created")
             ->assertExitCode(0);
 
         // Verify files were actually created

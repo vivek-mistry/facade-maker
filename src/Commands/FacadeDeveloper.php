@@ -112,7 +112,7 @@ class FacadeDeveloper extends Command
 
         
 
-        $facadeStubsPath = __DIR__.'/../../../stubs/facades.stub';
+        $facadeStubsPath = __DIR__.'/../stubs/facades.stub';
 
         $contents = $this->getStubContents($facadeStubsPath, $stubsVariable);
 
@@ -126,7 +126,7 @@ class FacadeDeveloper extends Command
             'CLASS_NAME' => ucwords(Pluralizer::singular($facadeServiceClass)),
         ];
 
-        $facadeStubsPath = __DIR__.'/../../../stubs/facades-services.stub';
+        $facadeStubsPath = __DIR__.'/../stubs/facades-services.stub';
 
         $contents = $this->getStubContents($facadeStubsPath, $stubsVariable);
 

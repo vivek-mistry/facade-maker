@@ -78,7 +78,7 @@ class FaceMakerCommandTest extends BaseTestCase
             unlink($expectedRepoPath);
         }
 
-        $this->artisan('app:make-repo', ['facadeName' => 'FileUpload', 'facadeServiceClass' => 'CommonFileUpload'])
+        $this->artisan('app:facade-maker', ['facadeName' => 'FileUpload', 'facadeServiceClass' => 'CommonFileUpload'])
             // ->expectsOutput("File : {$expectedInterfacePath} created")
             // ->expectsOutput("File : {$expectedRepoPath} created")
             ->assertExitCode(0);

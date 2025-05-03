@@ -1,11 +1,11 @@
 <?php
 
-namespace VivekMistry\RepositoryInterface\Tests;
+namespace VivekMistry\FacadeMaker\Tests;
 
 use Illuminate\Support\Facades\Artisan;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-abstract class TestCase extends BaseTestCase
+abstract class FacadesTestCase extends BaseTestCase
 {
     
 }

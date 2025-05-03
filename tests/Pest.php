@@ -1,6 +1,6 @@
 <?php
 
-use VivekMistry\FacadeMaker\Tests\TestCase;
+use VivekMistry\FacadeMaker\Tests\FacadesTestCase;
 
 
 /*
@@ -14,7 +14,7 @@ use VivekMistry\FacadeMaker\Tests\TestCase;
 |
 */
 
-pest()->extend(TestCase::class)
+pest()->extend(FacadesTestCase::class)
  // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 

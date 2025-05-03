@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace VivekMistry\FacadeMaker\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
@@ -152,5 +152,10 @@ class FacadeDeveloper extends Command
         }
 
         return $path;
+    }
+
+    public function getSignature(): string
+    {
+        return $this->signature;
     }
 }

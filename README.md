@@ -1,4 +1,4 @@
-## Laravel Repository Interface
+## Laravel Facade Maker
 
 A Laravel package that helps you to make the Facade & ready the facade structure.
 

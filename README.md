@@ -12,7 +12,7 @@ composer require vivek-mistry/facade-maker
 
 ## How to generate the Facade?
 ```bash
-php app:facade-maker
+php artisan app:facade-maker
 
 // Ask you for FacadeName and FacadeService
 // FacadeName : FileUpload

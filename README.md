@@ -61,4 +61,4 @@ composer test
 - [Vivek Mistry](https://github.com/vivek-mistry) - Project creator and maintainer
 
 ## License
-MIT License. See [LICENSE](/vivek-mistry/facade-maker/blob/main/LICENSE) for details.
+MIT License. See [LICENSE](https://github.com/vivek-mistry/facade-maker/blob/main/LICENSE) for details.
